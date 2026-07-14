@@ -6,54 +6,64 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
         .card { background: white; width: 100%; max-width: 850px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .logout { color: #dc3545; text-decoration: none; font-size: 14px; font-weight: bold; }
+        
         .status-box { background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e9ecef; margin-bottom: 25px; }
         .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
         .btn-start { background: #28a745; color: white; }
         .btn-stop { background: #dc3545; color: white; }
-        .btn-copy-all { background: #6f42c1; color: white; margin-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        td { padding: 12px; border-bottom: 1px solid #f0f0f0; font-family: monospace; font-size: 12px; color: #444; }
-        .logout { color: #dc3545; text-decoration: none; font-size: 14px; font-weight: bold; }
+        .btn-copy-all { background: #6f42c1; color: white; }
+        
+        #cookieList { 
+            width: 100%; 
+            height: 250px; 
+            padding: 15px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            font-family: monospace; 
+            background: #f9f9f9; 
+            resize: vertical;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
 <div class="card">
+    <!-- হেডার: ইমেইল সরিয়ে দেওয়া হয়েছে -->
     <div class="header">
         <h2>🌐 Automation Dashboard</h2>
         <a href="{{ url_for('logout') }}" class="logout">🚪 লগ আউট</a>
     </div>
 
+    <!-- কন্ট্রোল প্যানেল -->
     <div class="status-box">
         <strong>Status:</strong> <span style="color: #28a745;">● Running</span><br><br>
         <button class="btn btn-start">▶ Start</button>
         <button class="btn btn-stop">🛑 Stop</button>
     </div>
 
+    <!-- আইডি লিস্ট সেকশন -->
     <div class="header">
-        <h3>📋 Collected Cookies</h3>
-        <button class="btn btn-copy-all" onclick="copyAll()">📋 কপি অল</button>
+        <h3>📋 সংগৃহীত আইডি লিস্ট</h3>
+        <button class="btn btn-copy-all" onclick="copyAll()">📋 সব কপি করুন</button>
     </div>
 
-    <table id="cookieTable">
-        <tbody id="cookieBody">
-            <!-- এখানে আপনার কুকি ডাটাগুলো লুপ হয়ে আসবে -->
-            <tr><td>c_user=1000123456789; xs=32:abc...;</td></tr>
-            <tr><td>c_user=1000987654321; xs=52:xyz...;</td></tr>
-        </tbody>
-    </table>
+    <textarea id="cookieList" readonly>
+c_user=1000123456789; xs=32:abc...;
+c_user=1000987654321; xs=52:xyz...;
+c_user=1000555666777; xs=88:qwe...;
+    </textarea>
 </div>
 
 <script>
     function copyAll() {
-        let cookies = [];
-        document.querySelectorAll('#cookieBody td').forEach(td => {
-            cookies.push(td.innerText);
-        });
-        navigator.clipboard.writeText(cookies.join('\n')).then(() => {
-            alert('সব কুকি কপি হয়েছে!');
-        });
+        const copyText = document.getElementById("cookieList");
+        copyText.select();
+        document.execCommand("copy");
+        alert("সব আইডি কপি হয়েছে!");
     }
 </script>
 </body>
