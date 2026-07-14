@@ -7,6 +7,7 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
+login_manager.login_view = 'login' # এই লাইনটি যোগ করা হয়েছে
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
