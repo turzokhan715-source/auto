@@ -16,36 +16,34 @@
         .btn-stop { background: #dc3545; color: white; }
         .btn-copy-all { background: #6f42c1; color: white; }
         
+        /* গুগল শিট স্টাইল বক্স */
         #cookieList { 
             width: 100%; 
-            height: 250px; 
+            height: 300px; 
             padding: 15px; 
             border: 1px solid #ddd; 
             border-radius: 8px; 
             font-family: monospace; 
             background: #f9f9f9; 
-            resize: vertical;
             box-sizing: border-box;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <!-- হেডার: ইমেইল সরিয়ে দেওয়া হয়েছে -->
     <div class="header">
         <h2>🌐 Automation Dashboard</h2>
         <a href="{{ url_for('logout') }}" class="logout">🚪 লগ আউট</a>
     </div>
 
-    <!-- কন্ট্রোল প্যানেল -->
     <div class="status-box">
         <strong>Status:</strong> <span style="color: #28a745;">● Running</span><br><br>
         <button class="btn btn-start">▶ Start</button>
         <button class="btn btn-stop">🛑 Stop</button>
     </div>
 
-    <!-- আইডি লিস্ট সেকশন -->
     <div class="header">
         <h3>📋 সংগৃহীত আইডি লিস্ট</h3>
         <button class="btn btn-copy-all" onclick="copyAll()">📋 সব কপি করুন</button>
