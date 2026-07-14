@@ -1,11 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Automation Dashboard</title>
+    <style>
+        /* পেজের সাধারণ ডিজাইন */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* মাঝখানে আনার জন্য */
+            align-items: center;     /* মাঝখানে আনার জন্য */
+            height: 100vh;           /* পুরো স্ক্রিন জুড়ে */
+        }
+
+        /* লগইন বক্সের ডিজাইন */
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-top: 0;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        /* ইনপুট ফিল্ডের ডিজাইন */
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* প্যাডিং যাতে সাইজ না বাড়ায় */
+        }
+
+        /* বাটনের ডিজাইন */
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* সাইনআপ লিঙ্কের ডিজাইন */
+        .signup-link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
 <body>
+
+<div class="login-container">
     <h2>Login</h2>
     <form method="POST">
-        <input type="email" name="email" placeholder="Email" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
+        <input type="email" name="email" placeholder="Enter your Email" required>
+        <input type="password" name="password" placeholder="Enter your Password" required>
         <button type="submit">Login</button>
     </form>
+    <div class="signup-link">
+        Don't have an account? <a href="/signup">Sign up here</a>
+    </div>
+</div>
+
 </body>
 </html>
