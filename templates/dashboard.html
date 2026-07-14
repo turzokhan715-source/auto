@@ -6,27 +6,17 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
         .card { background: white; width: 100%; max-width: 850px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .logout { color: #dc3545; text-decoration: none; font-size: 14px; font-weight: bold; }
-        
         .status-box { background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e9ecef; margin-bottom: 25px; }
         .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
         .btn-start { background: #28a745; color: white; }
         .btn-stop { background: #dc3545; color: white; }
-        .btn-copy-all { background: #6f42c1; color: white; }
-        
-        /* গুগল শিট স্টাইল বক্স */
+        .btn-copy-all { background: #6f42c1; color: white; margin-bottom: 10px; }
         #cookieList { 
-            width: 100%; 
-            height: 300px; 
-            padding: 15px; 
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
-            font-family: monospace; 
-            background: #f9f9f9; 
-            box-sizing: border-box;
-            font-size: 14px;
+            width: 100%; height: 300px; padding: 15px; border: 1px solid #ddd; 
+            border-radius: 8px; font-family: monospace; background: #f9f9f9; 
+            box-sizing: border-box; font-size: 14px;
         }
     </style>
 </head>
@@ -52,7 +42,6 @@
     <textarea id="cookieList" readonly>
 c_user=1000123456789; xs=32:abc...;
 c_user=1000987654321; xs=52:xyz...;
-c_user=1000555666777; xs=88:qwe...;
     </textarea>
 </div>
 
