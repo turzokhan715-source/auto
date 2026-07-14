@@ -1,13 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, UserMixin, login_user, login_required
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login' # এই লাইনটি যোগ করা হয়েছে
+login_manager.login_view = 'login'
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,10 +21,14 @@ def load_user(user_id):
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        new_user = User(email=request.form.get('email'), password=request.form.get('password'))
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm = request.form.get('confirm_password')
+        if password == confirm:
+            new_user = User(email=email, password=password)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('login'))
     return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
