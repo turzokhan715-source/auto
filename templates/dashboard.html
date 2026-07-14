@@ -1,10 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automation Dashboard</title>
+    <style>
+        /* সাধারণ স্টাইলিং */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        /* হেডার সেকশন */
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+        .header h1 { margin: 0; color: #333; }
+        .logout-btn { background-color: #dc3545; color: white; padding: 8px 12px; text-decoration: none; border-radius: 4px; font-size: 14px; }
+
+        /* কন্ট্রোল প্যানেল */
+        .control-panel { background-color: #e9ecef; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .status { font-weight: bold; font-size: 18px; margin-bottom: 10px; }
+        .status.running { color: #28a745; }
+        .status.stopped { color: #dc3545; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-right: 10px; }
+        .btn-start { background-color: #28a745; color: white; }
+        .btn-stop { background-color: #dc3545; color: white; }
+
+        /* আইডি লিস্ট সেকশন */
+        .id-list { margin-top: 20px; }
+        .list-header { display: flex; justify-content: space-between; align-items: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+        th { background-color: #f8f9fa; }
+        .cookie-text { font-family: monospace; font-size: 13px; color: #555; word-break: break-all; }
+        
+        /* অ্যাকশন বাটন */
+        .action-btn { padding: 5px 10px; font-size: 12px; cursor: pointer; }
+        .btn-copy { background-color: #007bff; color: white; border: none; border-radius: 4px; }
+        .btn-clear { background-color: #6c757d; color: white; border: none; border-radius: 4px; float: right; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Automation Dashboard</h1>
-    <p>This is your automated service running on Render.</p>
+
+<div class="container">
+    <!-- হেডার -->
+    <div class="header">
+        <h1>🌐 Automation Dashboard</h1>
+        <span>স্বাগতম, {{ current_user.email }}</span>
+        <a href="{{ url_for('logout') }}" class="logout-btn">🚪 লগ আউট</a>
+    </div>
+
+    <!-- কন্ট্রোল প্যানেল -->
+    <div class="control-panel">
+        <h3>⚙️ Automation Control</h3>
+        <!-- এই অংশটি পরে Python দিয়ে ডাইনামিক করা হবে -->
+        <div class="status running">🟢 সচল (Running)</div>
+        
+        <!-- বাটন ফর্ম -->
+        <form action="#" method="POST" style="display: inline;">
+            <button type="submit" name="action" value="start" class="btn btn-start">▶️ চালু করুন</button>
+            <button type="submit" name="action" value="stop" class="btn btn-stop">🛑 বন্ধ করুন</button>
+        </form>
+    </div>
+
+    <!-- আইডি লিস্ট -->
+    <div class="id-list">
+        <div class="list-header">
+            <h3>📋 সংগৃহীত আইডি লিস্ট (cookies.txt)</h3>
+            <button class="action-btn btn-clear" onclick="clearList()">🗑️ সব মুছুন</button>
+        </div>
+        
+        <table id="cookieTable">
+            <thead>
+                <tr>
+                    <th>ID (Cookies Snippet)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cookieBody">
+                <!-- ডামি ডাটা: পরে Python/JS দিয়ে লোড করা হবে -->
+                <tr>
+                    <td class="cookie-text">c_user=1000123456789; xs=32:abc...;</td>
+                    <td><button class="action-btn btn-copy" onclick="copyCookie(this)">📋 কপি</button></td>
+                </tr>
+                <tr>
+                    <td class="cookie-text">c_user=1000987654321; xs=52:xyz...;</td>
+                    <td><button class="action-btn btn-copy" onclick="copyCookie(this)">📋 কপি</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JavaScript for Copy/Clear -->
+<script>
+    // নির্দিষ্ট কুকি কপি করার ফাংশন
+    function copyCookie(button) {
+        // বাটনের আগের td এলিমেন্ট খুঁজে বের করা
+        const row = button.parentNode.parentNode;
+        const cookieCell = row.querySelector('.cookie-text');
+        const cookieText = cookieCell.innerText;
+
+        // ক্লিপবোর্ডে টেক্সট কপি করা
+        navigator.clipboard.writeText(cookieText).then(() => {
+            button.innerText = '✅ কপি হয়েছে!';
+            button.style.backgroundColor = '#218838';
+            
+            // ২ সেকেন্ড পর আবার আগের অবস্থায় ফিরে যাওয়া
+            setTimeout(() => {
+                button.innerText = '📋 কপি';
+                button.style.backgroundColor = '#007bff';
+            }, 2000);
+        });
+    }
+
+    // পুরো লিস্ট ক্লিয়ার করার ফাংশন
+    function clearList() {
+        if (confirm('আপনি কি নিশ্চিত যে সব আইডি মুছে ফেলতে চান?')) {
+            const tbody = document.getElementById('cookieBody');
+            tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:grey;">লিস্ট খালি আছে</td></tr>';
+            // ভবিষ্যতে এখানে Python এ রিকোয়েস্ট পাঠিয়ে ফাইল খালি করার কোড যোগ হবে
+        }
+    }
+</script>
+
 </body>
 </html>
